@@ -11,13 +11,15 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/toastr.min.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+   <!-- <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">-->
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -72,9 +74,40 @@
             </div>
         </nav>
 
-        <main class="py-4">
+       <!-- <main class="py-4">
             @yield('content')
-        </main>
+        </main>-->
+        <div class="container py-4">
+            <div class="row">
+                @if(Auth::check())
+                    <div class="col-lg-4">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <a href="{{route('home')}}"> Home</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{route('post.create')}}"> Create new post</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{route('categories')}}"> See all categories</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{route('category.create')}}"> Create new category</a>
+                            </li>
+                        </ul>
+                    </div>
+                @endif
+                <div class="col-lg-8">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        @if(Session::has('success'))
+            toastr.success("{{ Session::get('success') }}")
+        @endif
+    </script>
 </body>
 </html>
