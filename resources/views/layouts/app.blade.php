@@ -96,7 +96,7 @@
                             </li>
                         </ul>
                     </div>
-                @endif
+            @endif
                 <div class="col-lg-8">
                     @yield('content')
                 </div>

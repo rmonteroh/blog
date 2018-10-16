@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\Category;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -23,7 +25,14 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        if($categories->count() == 0){
+            session()->flash('info', 'You must have some categories before attempting to create a post');
+            return redirect()->route('category.create');
+        }
+        
+        return view('admin.posts.create')->with('categories', Category::all());
     }
 
     /**
@@ -38,8 +47,25 @@ class PostsController extends Controller
             'title' => 'required|max:255',
             'image' => 'required|image',
             'content' => 'required',
+            'category_id' => 'required',
         ]);
-        dd($request);
+
+        $img = $request->image;
+        $img_new_name = time().$img->getClientOriginalName();
+        $img->move('uploads/posts', $img_new_name);
+
+        $post = Post::create([
+            'title'=> $request->title,
+            'image'=> 'uploads/posts'.$img_new_name,
+            'content'=> $request->content,
+            'category_id'=> $request->category_id,
+            'slug'=> str_slug($request->title),
+        ]);
+
+        session()->flash('success', 'Post created succesfuly');
+
+        return redirect()->route('post.create');
+        
     }
 
     /**
