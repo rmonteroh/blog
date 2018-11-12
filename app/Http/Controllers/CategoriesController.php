@@ -15,7 +15,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index')->with('categories', Category::all());
+        //dd(Category::paginate(10));
+        return view('admin.categories.index')->with('categories', Category::paginate(5));
     }
 
     /**
@@ -45,6 +46,7 @@ class CategoriesController extends Controller
         $category->save();
 
         Session::flash('success', 'You succesfully created a category');
+        
         return redirect()->back();
     }
 

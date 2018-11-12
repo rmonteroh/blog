@@ -9,13 +9,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/toastr.min.js') }}" defer></script>
+
 
     <!-- Fonts -->
-   <!-- <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">-->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -96,18 +94,25 @@
                             </li>
                         </ul>
                     </div>
-            @endif
+                @endif
                 <div class="col-lg-8">
                     @yield('content')
                 </div>
+                @yield('login')
             </div>
         </div>
     </div>
 
-    <script>
-        @if(Session::has('success'))
-            toastr.success("{{ Session::get('success') }}")
-        @endif
-    </script>
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="/js/toastr.min.js"></script>
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+        </script>
+@include('admin.includes.session-messages')
+
 </body>
 </html>

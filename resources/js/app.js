@@ -7,7 +7,6 @@
 
 require('./bootstrap');
 
-
 window.Vue = require('vue');
 
 import { Laue } from 'laue';

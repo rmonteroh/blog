@@ -35,6 +35,7 @@
                 <div class="form-group">
                     <label for="image">Select a category</label>
                     <select name="category_id" id="category" class="form-control">
+                        <option value="">Select a category</option>
                         @foreach ($categories as $category)
                             <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach

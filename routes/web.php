@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/post',function(){
+    Session::flash('key','valor');
+    return redirect('/');
+});
+
 Auth::routes();
 
 
