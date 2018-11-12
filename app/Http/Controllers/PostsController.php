@@ -15,7 +15,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.posts.index')->with('posts', Post::paginate(5));
     }
 
     /**
@@ -56,7 +56,7 @@ class PostsController extends Controller
 
         $post = Post::create([
             'title'=> $request->title,
-            'image'=> 'uploads/posts'.$img_new_name,
+            'image'=> 'uploads/posts/'.$img_new_name,
             'content'=> $request->content,
             'category_id'=> $request->category_id,
             'slug'=> str_slug($request->title),
@@ -110,6 +110,10 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id); 
+        $post->delete();
+        
+        Session::flash('success', 'You succesfully deleted a post');
+        return redirect()->route('posts');
     }
 }

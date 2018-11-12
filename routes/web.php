@@ -17,11 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/post',function(){
-    Session::flash('key','valor');
-    return redirect('/');
-});
-
 Auth::routes();
 
 
@@ -29,8 +24,12 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'],function(){
     
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::get('/posts', 'PostsController@index')->name('posts');
     Route::get('/post/create', 'PostsController@create')->name('post.create');
     Route::post('/post/store', 'PostsController@store')->name('post.store');
+    Route::get('/post/edit/{id}', 'PostsController@edit')->name('post.edit');
+    Route::get('/post/delete/{id}', 'PostsController@destroy')->name('post.delete');
+    Route::post('/post/update/{id}', 'PostsController@update')->name('post.update');
     
     Route::get('/categories', 'CategoriesController@index')->name('categories');
     Route::get('/category/create', 'CategoriesController@create')->name('category.create');
